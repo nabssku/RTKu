@@ -1,0 +1,424 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  KETUA_RT
+  SEKRETARIS
+  BENDAHARA
+  WARGA
+}
+
+enum StatusWarga {
+  TETAP
+  KONTRAK
+  PINDAH
+  MENINGGAL
+}
+
+enum StatusKawin {
+  BELUM_KAWIN
+  KAWIN
+  CERAI_HIDUP
+  CERAI_MATI
+}
+
+enum JenisKelamin {
+  LAKI_LAKI
+  PEREMPUAN
+}
+
+enum Agama {
+  ISLAM
+  KRISTEN
+  KATOLIK
+  HINDU
+  BUDDHA
+  KONGHUCU
+  LAINNYA
+}
+
+enum HubunganKeluarga {
+  KEPALA_KELUARGA
+  ISTRI
+  ANAK
+  MENANTU
+  CUCU
+  ORANG_TUA
+  MERTUA
+  FAMILI_LAIN
+  LAINNYA
+}
+
+enum StatusPengaduan {
+  DITERIMA
+  DIPROSES
+  SELESAI
+  DITOLAK
+}
+
+enum KategoriPengaduan {
+  KEAMANAN
+  KEBERSIHAN
+  INFRASTRUKTUR
+  SOSIAL
+  LAINNYA
+}
+
+enum JenisKeuangan {
+  PEMASUKAN
+  PENGELUARAN
+}
+
+enum StatusPembayaran {
+  PENDING
+  PAID
+  EXPIRED
+  FAILED
+}
+
+enum KondisiInventaris {
+  BAIK
+  RUSAK_RINGAN
+  RUSAK_BERAT
+  HILANG
+}
+
+enum StatusPeminjaman {
+  DIPINJAM
+  DIKEMBALIKAN
+}
+
+model RT {
+  id              String    @id @default(cuid())
+  name            String
+  nomorRT         String?
+  nomorRW         String?
+  kelurahan       String?
+  kecamatan       String?
+  kabupaten       String?
+  provinsi        String?
+  alamat          String?
+  logoUrl         String?
+  kontakKetua     String?
+  activationCode  String?
+  trialEnd        DateTime?
+  isActive        Boolean   @default(true)
+  pakasirSlug     String?
+  pakasirApiKey   String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  users       User[]
+  keluarga    Keluarga[]
+  iuran       Iuran[]
+  surat       Surat[]
+  pengaduan   Pengaduan[]
+  pengumuman  Pengumuman[]
+  keuangan    Keuangan[]
+  inventaris  Inventaris[]
+  kegiatan    Kegiatan[]
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String?   @unique
+  phone         String?   @unique
+  password      String?
+  image         String?
+  role          Role      @default(WARGA)
+  emailVerified DateTime?
+  phoneVerified Boolean   @default(false)
+  rtId          String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  rt            RT?       @relation(fields: [rtId], references: [id])
+  accounts      Account[]
+  sessions      Session[]
+  otpCodes      OTPCode[]
+  pengaduan     Pengaduan[]
+  rsvp          RSVP[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model OTPCode {
+  id        String   @id @default(cuid())
+  phone     String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  userId    String?
+  createdAt DateTime @default(now())
+
+  user      User?    @relation(fields: [userId], references: [id])
+
+  @@index([phone, code])
+}
+
+model Keluarga {
+  id            String       @id @default(cuid())
+  noKK          String       @unique
+  alamat        String?
+  rt            String?
+  rw            String?
+  kelurahan     String?
+  kecamatan     String?
+  kabupaten     String?
+  provinsi      String?
+  kodePos       String?
+  statusTinggal StatusWarga  @default(TETAP)
+  rtId          String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  rtEntity      RT           @relation(fields: [rtId], references: [id])
+  anggota       Warga[]
+}
+
+model Warga {
+  id              String            @id @default(cuid())
+  nik             String            @unique
+  nama            String
+  tempatLahir     String?
+  tanggalLahir    DateTime?
+  jenisKelamin    JenisKelamin?
+  agama           Agama?
+  statusKawin     StatusKawin?
+  pekerjaan       String?
+  pendidikan      String?
+  hubungan        HubunganKeluarga?
+  statusWarga     StatusWarga       @default(TETAP)
+  telepon         String?
+  photoUrl        String?
+  keluargaId      String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  keluarga        Keluarga          @relation(fields: [keluargaId], references: [id], onDelete: Cascade)
+  pembayaran      Pembayaran[]
+  suratWarga      SuratWarga[]
+}
+
+model Iuran {
+  id          String   @id @default(cuid())
+  nama        String
+  nominal     Float
+  deskripsi   String?
+  periode     String?
+  isActive    Boolean  @default(true)
+  rtId        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  rt          RT       @relation(fields: [rtId], references: [id])
+  pembayaran  Pembayaran[]
+}
+
+model Pembayaran {
+  id              String           @id @default(cuid())
+  wargaId         String
+  iuranId         String
+  nominal         Float
+  periode         String
+  metodePembayaran String?
+  statusPembayaran StatusPembayaran @default(PENDING)
+  pakasirTxId     String?
+  paymentUrl      String?
+  buktiUrl        String?
+  paidAt          DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  warga           Warga            @relation(fields: [wargaId], references: [id])
+  iuran           Iuran            @relation(fields: [iuranId], references: [id])
+}
+
+model Surat {
+  id          String   @id @default(cuid())
+  nomorSurat  String   @unique
+  jenisSurat  String
+  perihal     String?
+  isiSurat    String?  @db.Text
+  pdfUrl      String?
+  rtId        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  rt          RT       @relation(fields: [rtId], references: [id])
+  wargaSurat  SuratWarga[]
+}
+
+model SuratWarga {
+  id       String @id @default(cuid())
+  suratId  String
+  wargaId  String
+
+  surat    Surat  @relation(fields: [suratId], references: [id], onDelete: Cascade)
+  warga    Warga  @relation(fields: [wargaId], references: [id])
+
+  @@unique([suratId, wargaId])
+}
+
+model Pengaduan {
+  id          String             @id @default(cuid())
+  judul       String
+  deskripsi   String             @db.Text
+  kategori    KategoriPengaduan
+  status      StatusPengaduan    @default(DITERIMA)
+  fotoUrl     String?
+  isAnonim    Boolean            @default(false)
+  tanggapan   String?            @db.Text
+  userId      String
+  rtId        String
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  user        User               @relation(fields: [userId], references: [id])
+  rt          RT                 @relation(fields: [rtId], references: [id])
+}
+
+model Pengumuman {
+  id          String   @id @default(cuid())
+  judul       String
+  konten      String   @db.Text
+  gambarUrl   String?
+  lampiranUrl String?
+  isPinned    Boolean  @default(false)
+  rtId        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  rt          RT       @relation(fields: [rtId], references: [id])
+}
+
+model Keuangan {
+  id          String         @id @default(cuid())
+  jenis       JenisKeuangan
+  kategori    String
+  nominal     Float
+  keterangan  String?
+  buktiUrl    String?
+  tanggal     DateTime       @default(now())
+  rtId        String
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  rt          RT             @relation(fields: [rtId], references: [id])
+}
+
+model Inventaris {
+  id          String              @id @default(cuid())
+  nama        String
+  jumlah      Int                 @default(1)
+  kondisi     KondisiInventaris   @default(BAIK)
+  lokasi      String?
+  fotoUrl     String?
+  qrCode      String?
+  rtId        String
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  rt          RT                  @relation(fields: [rtId], references: [id])
+  peminjaman  Peminjaman[]
+}
+
+model Peminjaman {
+  id            String            @id @default(cuid())
+  inventarisId  String
+  peminjam      String
+  telepon       String?
+  tanggalPinjam DateTime          @default(now())
+  tanggalKembali DateTime?
+  status        StatusPeminjaman  @default(DIPINJAM)
+  keterangan    String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  inventaris    Inventaris        @relation(fields: [inventarisId], references: [id])
+}
+
+model Kegiatan {
+  id          String   @id @default(cuid())
+  judul       String
+  deskripsi   String?  @db.Text
+  tanggal     DateTime
+  waktu       String?
+  lokasi      String?
+  fotoUrl     String?
+  rtId        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  rt          RT       @relation(fields: [rtId], references: [id])
+  rsvp        RSVP[]
+}
+
+model RSVP {
+  id         String   @id @default(cuid())
+  kegiatanId String
+  userId     String
+  hadir      Boolean  @default(true)
+  keterangan String?
+  createdAt  DateTime @default(now())
+
+  kegiatan   Kegiatan @relation(fields: [kegiatanId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@unique([kegiatanId, userId])
+}
+
+model Payment {
+  id            String           @id @default(cuid())
+  rtId          String
+  amount        Float
+  description   String?
+  status        StatusPembayaran @default(PENDING)
+  pakasirTxId   String?
+  paymentUrl    String?
+  paidAt        DateTime?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
