@@ -108,6 +108,9 @@ model RT {
   alamat          String?
   logoUrl         String?
   kontakKetua     String?
+  namaSekretaris  String?
+  namaBendahara   String?
+  isOnboarded     Boolean   @default(false)
   activationCode  String?
   trialEnd        DateTime?
   isActive        Boolean   @default(true)
@@ -137,6 +140,7 @@ model User {
   role          Role      @default(WARGA)
   emailVerified DateTime?
   phoneVerified Boolean   @default(false)
+  isOnboarded   Boolean   @default(false)
   rtId          String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

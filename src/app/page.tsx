@@ -2,7 +2,25 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { CheckCircle2, ShieldCheck, HeartHandshake, Zap, Sparkles, Smartphone, ArrowRight, ScanLine, FileText, Check, AlertTriangle, Users, Wallet, Star, RefreshCw, Upload, FileSignature, ArrowRightLeft } from "lucide-react";
+import {
+  CheckCircle2,
+  ShieldCheck,
+  Zap,
+  Sparkles,
+  Smartphone,
+  ArrowRight,
+  ScanLine,
+  FileText,
+  Users,
+  Wallet,
+  Star,
+  Upload,
+  ArrowRightLeft,
+  Lock,
+  ArrowDownCircle,
+  HelpCircle,
+  MessageSquare
+} from "lucide-react";
 
 export default function Home() {
   // Simulator State
@@ -23,38 +41,41 @@ export default function Home() {
             clearInterval(interval);
             setTimeout(() => {
               setSimStep("done");
-            }, 300);
+            }, 400);
             return 100;
           }
-          return prev + 5;
+          return prev + 4; // Lebih smooth
         });
-      }, 50);
+      }, 40);
     }
     return () => clearInterval(interval);
   }, [simStep]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-zinc-950 text-slate-800 dark:text-zinc-200 font-sans flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
-      {/* Background elegant mesh gradients */}
-      <div className="absolute top-0 right-0 w-[55%] aspect-square rounded-full bg-gradient-to-br from-indigo-650/10 to-transparent blur-[165px] pointer-events-none"></div>
-      <div className="absolute top-[25%] left-0 w-[45%] aspect-square rounded-full bg-gradient-to-tr from-sky-500/5 to-transparent blur-[130px] pointer-events-none"></div>
+    <div className="min-h-screen bg-slate-50 dark:bg-zinc-950 text-slate-800 dark:text-zinc-150 font-sans flex flex-col justify-between selection:bg-indigo-500 selection:text-white transition-colors duration-300">
+      {/* Background gradients */}
+      <div className="absolute top-0 right-0 w-[60%] aspect-square rounded-full bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-transparent blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-[30%] left-0 w-[50%] aspect-square rounded-full bg-gradient-to-tr from-sky-500/5 via-indigo-500/5 to-transparent blur-[130px] pointer-events-none"></div>
 
       {/* Navbar */}
-      <header className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-slate-205 dark:border-zinc-800 sticky top-0 z-50 transition-colors">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <header className="bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border-b border-slate-200/80 dark:border-zinc-800/80 sticky top-0 z-50 transition-colors">
+        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-indigo-600 dark:bg-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25">
-              <span className="text-white font-extrabold text-xl">R</span>
+            <div className="w-10 h-10 bg-indigo-650 dark:bg-indigo-500 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-650/20 dark:shadow-indigo-500/20">
+              <span className="text-white font-extrabold text-2xl">R</span>
             </div>
-            <span className="text-xl font-black tracking-tight bg-gradient-to-r from-zinc-900 to-indigo-900 dark:from-white dark:to-zinc-300 bg-clip-text text-transparent">
-              RTKu
-            </span>
+            <div>
+              <span className="text-2xl font-black tracking-tight bg-gradient-to-r from-slate-900 via-indigo-950 to-indigo-700 dark:from-white dark:to-zinc-300 bg-clip-text text-transparent">
+                RTKu
+              </span>
+              <span className="text-[10px] block font-bold text-slate-450 uppercase tracking-widest leading-none">Aplikasi Rukun Tetangga</span>
+            </div>
           </div>
 
           <div className="flex items-center gap-4">
             <Link
               href="/beranda"
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-all shadow-md shadow-indigo-550/10 hover:shadow-indigo-600/20 active:scale-98 cursor-pointer"
+              className="bg-slate-900 hover:bg-slate-800 dark:bg-indigo-600 dark:hover:bg-indigo-550 text-white font-extrabold px-6 py-3 rounded-2xl text-xs sm:text-sm tracking-wide transition-all shadow-md active:scale-97 cursor-pointer hover:-translate-y-0.5"
             >
               Buka Dashboard
             </Link>
@@ -63,117 +84,131 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
+      <section className="py-16 md:py-24 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+
+            {/* Left Content Column */}
             <div className="space-y-8 lg:col-span-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black bg-indigo-50 dark:bg-indigo-950/40 text-indigo-755 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/35">
-                <Sparkles size={14} className="text-indigo-600 dark:text-indigo-455" />
-                🤖 AI-POWERED · 100% MADE IN INDONESIA
+              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-black bg-indigo-50 dark:bg-indigo-950/40 text-indigo-705 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/35">
+                <Sparkles size={14} className="text-indigo-600 dark:text-indigo-455 animate-pulse" />
+                DENGAN AI OCR KARTU KELUARGA · 100% INDONESIA
               </div>
 
-              <h1 className="text-4xl md:text-6xl font-black leading-tight tracking-tight text-zinc-955 dark:text-white">
-                Aplikasi RT — <span className="bg-gradient-to-r from-indigo-650 to-indigo-500 bg-clip-text text-transparent animate-pulse">Foto KK Auto-Input</span> & Dashboard Iuran Real-Time
+              <h1 className="text-4xl md:text-6xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
+                Input Data Warga RT <br />
+                <span className="bg-gradient-to-r from-indigo-650 via-indigo-500 to-indigo-750 dark:from-indigo-400 dark:to-indigo-300 bg-clip-text text-transparent">
+                  Cukup Foto KK Saja!
+                </span>
               </h1>
 
-              <p className="text-slate-655 dark:text-zinc-405 text-lg leading-relaxed max-w-xl">
-                RTKu memodernisasi cara kerja Rukun Tetangga (RT). Bebaskan Pengurus RT dan Bendahara dari pengetikan KK secara manual. Cukup foto KK, AI akan membaca semua data kependudukan secara instan.
+              <p className="text-slate-655 dark:text-zinc-400 text-lg leading-relaxed max-w-xl">
+                Bebaskan pengurus RT dari kerepotan mengetik NIK dan biodata keluarga satu per satu. Cukup upload foto dokumen KK, teknologi AI RTKu akan mengekstrak seluruh data warga secara instan.
               </p>
 
-              {/* Trust badges */}
-              <div className="grid grid-cols-2 gap-3.5 pt-2 text-[13.5px] font-extrabold text-zinc-650 dark:text-zinc-350">
-                <div className="flex items-center gap-2">
-                  <span className="text-emerald-500">✅</span> Setup Cepat 5 menit
+              {/* Trust Badges */}
+              <div className="grid grid-cols-2 gap-4 max-w-lg pt-2 text-[14px] font-bold text-slate-600 dark:text-zinc-350">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex-shrink-0 w-5 h-5 bg-emerald-50 dark:bg-emerald-950/50 rounded-full flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-xs">✓</span>
+                  Setup RT Cepat (5 Menit)
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-emerald-500">✅</span> AI 95%+ Akurat
+                <div className="flex items-center gap-2.5">
+                  <span className="flex-shrink-0 w-5 h-5 bg-emerald-50 dark:bg-emerald-950/50 rounded-full flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-xs">✓</span>
+                  Akurasi AI Mencapai 95%+
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-emerald-500">✅</span> Server di Indonesia
+                <div className="flex items-center gap-2.5">
+                  <span className="flex-shrink-0 w-5 h-5 bg-emerald-50 dark:bg-emerald-950/50 rounded-full flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-xs">✓</span>
+                  Pembayaran Online & QRIS
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-emerald-500">✅</span> Support via WhatsApp
+                <div className="flex items-center gap-2.5">
+                  <span className="flex-shrink-0 w-5 h-5 bg-emerald-50 dark:bg-emerald-950/50 rounded-full flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-xs">✓</span>
+                  Keamanan Data Kependudukan
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-5 pt-3">
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-5 pt-3 items-stretch sm:items-center">
                 <Link
                   href="/beranda"
-                  className="bg-indigo-650 hover:bg-indigo-700 text-white font-extrabold text-center px-8 py-4 rounded-xl shadow-lg shadow-indigo-550/20 hover:shadow-indigo-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="bg-indigo-650 hover:bg-indigo-700 text-white font-extrabold text-center px-8 py-4.5 rounded-2xl shadow-lg shadow-indigo-650/15 dark:shadow-indigo-500/10 hover:shadow-indigo-600/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2.5 cursor-pointer text-sm tracking-wide"
                 >
-                  Buka Dashboard Gratis
+                  Buka Dashboard Sekarang
                   <ArrowRight size={18} />
                 </Link>
-                <div className="flex items-center gap-3 justify-center sm:justify-start">
-                  <span className="text-slate-405 dark:text-zinc-650 line-through text-sm">
-                    Rp 150.000
+                <div className="flex flex-col items-center sm:items-start justify-center">
+                  <span className="text-slate-400 dark:text-zinc-600 line-through text-xs font-bold leading-none">
+                    Lisensi Rp 150.000
                   </span>
-                  <div className="bg-emerald-50 dark:bg-emerald-990/30 border border-emerald-100 dark:border-emerald-900/30 px-3.5 py-1.5 rounded-xl">
-                    <span className="text-sm font-black text-emerald-600 dark:text-emerald-450">
-                      Cuma Rp 15.000 (Sekali Bayar)
+                  <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/30 px-3.5 py-1.5 rounded-xl mt-1">
+                    <span className="text-[12px] font-black text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
+                      Hanya Rp 15.000 (Selamanya)
                     </span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Interactive simulator widget */}
+            {/* Right Simulator Column */}
             <div className="lg:col-span-6 flex justify-center relative w-full">
-              <div className="absolute w-[90%] aspect-square bg-indigo-500/10 rounded-full blur-[100px] -z-10"></div>
+              <div className="absolute w-[80%] aspect-square bg-indigo-500/5 rounded-full blur-[90px] -z-10"></div>
 
-              <div className="w-full max-w-[480px] bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden transition-colors">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-sky-500 to-indigo-550"></div>
+              {/* Simulator Card CONTAINER */}
+              <div className="w-full max-w-[490px] bg-white dark:bg-zinc-900/90 border border-slate-205 dark:border-zinc-800 rounded-[32px] p-6.5 shadow-2xl relative overflow-hidden transition-all duration-300">
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-indigo-650 via-indigo-450 to-sky-400"></div>
 
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex justify-between items-center mb-6 border-b dark:border-zinc-800 pb-4">
                   <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-red-400"></span>
-                    <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
-                    <span className="w-3 h-3 rounded-full bg-green-400"></span>
+                    <span className="w-3.5 h-3.5 rounded-full bg-slate-100 dark:bg-zinc-800 border dark:border-zinc-700 flex items-center justify-center text-[8px] font-bold">1</span>
+                    <span className="w-3.5 h-3.5 rounded-full bg-slate-100 dark:bg-zinc-800 border dark:border-zinc-700 flex items-center justify-center text-[8px] font-bold">2</span>
+                    <span className="w-3.5 h-3.5 rounded-full bg-slate-100 dark:bg-zinc-800 border dark:border-zinc-700 flex items-center justify-center text-[8px] font-bold">3</span>
                   </div>
-                  <span className="text-xs bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-extrabold px-3 py-1 rounded-full flex items-center gap-1.5">
-                    <Sparkles size={11} className="animate-spin text-amber-500" />
-                    RTKu AI Simulator
+                  <span className="text-[11px] bg-indigo-50/80 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-extrabold px-3 py-1 rounded-full flex items-center gap-1.5">
+                    <Sparkles size={11} className="text-amber-500 animate-pulse" />
+                    RTKu AI Scanner Simulator
                   </span>
                 </div>
 
                 {simStep === "idle" && (
-                  <div className="py-8 text-center space-y-6">
-                    <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-950/50 rounded-2xl flex items-center justify-center mx-auto border border-dashed border-indigo-300 dark:border-indigo-800 shadow-inner group transition-all">
-                      <Upload size={32} className="text-indigo-600 dark:text-indigo-400 group-hover:scale-105 transition-transform" />
+                  <div className="py-8 text-center space-y-6 animate-in fade-in duration-200">
+                    <div className="w-22 h-22 bg-slate-50 dark:bg-zinc-950/60 rounded-3xl flex items-center justify-center mx-auto border-2 border-dashed border-slate-200 dark:border-zinc-800 shadow-inner group hover:border-indigo-400/50 transition-all cursor-pointer">
+                      <Upload size={36} className="text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform" />
                     </div>
-                    <div className="space-y-2">
-                      <h4 className="font-extrabold text-zinc-900 dark:text-white">Simulasi Scan Kartu Keluarga</h4>
-                      <p className="text-xs text-zinc-500 dark:text-zinc-650 max-w-sm mx-auto leading-relaxed">
-                        Lihat bagaimana AI membaca & menginput seluruh tabel anggota KK secara otomatis tanpa Anda mengetik manual.
+                    <div className="space-y-1.5">
+                      <h4 className="font-black text-slate-800 dark:text-white text-base">Uji Coba Pengenalan AI KK</h4>
+                      <p className="text-xs text-slate-450 dark:text-zinc-500 max-w-sm mx-auto leading-relaxed">
+                        Rasakan bagaimana sistem AI secara otomatis mengekstrak dokumen KK menjadi tabel anggota keluarga siap simpan.
                       </p>
                     </div>
                     <button
                       onClick={runSimulation}
-                      className="bg-indigo-650 hover:bg-indigo-700 text-white font-extrabold text-xs px-6 py-3 rounded-xl transition-all shadow-md active:scale-98 cursor-pointer flex items-center gap-2 mx-auto"
+                      className="bg-indigo-650 hover:bg-indigo-750 text-white font-extrabold text-xs px-6 py-3.5 rounded-xl transition-all shadow-md active:scale-97 cursor-pointer flex items-center gap-2 mx-auto"
                     >
                       <ScanLine size={14} />
-                      Coba Pindai Demo KK
+                      Simulasikan Foto KK
                     </button>
                   </div>
                 )}
 
                 {simStep === "scanning" && (
-                  <div className="py-12 space-y-6 relative">
-                    <div className="w-full h-44 bg-zinc-950 rounded-2xl border border-zinc-800 p-4 relative overflow-hidden flex flex-col justify-center items-center">
-                      {/* Scan laser line */}
+                  <div className="py-12 space-y-6 relative animate-in fade-in duration-200">
+                    <div className="w-full h-48 bg-slate-950 rounded-2xl border border-zinc-800 p-4 relative overflow-hidden flex flex-col justify-center items-center">
+
+                      {/* Laser scanner line effect */}
                       <div
-                        className="absolute left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent shadow-lg shadow-indigo-500/80 pointer-events-none transition-all duration-75"
+                        className="absolute left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-indigo-400 to-transparent shadow-lg shadow-indigo-500/80 pointer-events-none transition-all duration-75 block"
                         style={{ top: `${progress}%` }}
                       ></div>
 
+                      <div className="hidden animate-pulse select-none" />
+
                       <div className="text-center space-y-2 text-zinc-500">
-                        <ScanLine size={36} className="mx-auto text-indigo-400 animate-pulse" />
-                        <span className="text-[10px] uppercase tracking-widest font-bold">Mengekstrak Data KK...</span>
+                        <ScanLine size={38} className="mx-auto text-indigo-400 animate-pulse" />
+                        <span className="text-[10px] uppercase tracking-widest font-black text-indigo-500">Membaca Data Kartu Keluarga...</span>
                       </div>
                     </div>
                     <div className="space-y-2">
                       <div className="flex justify-between text-xs font-bold text-zinc-400">
-                        <span>Pembacaan Karakter (OCR)</span>
+                        <span>Pemrosesan OCR AI (RTKu Core)</span>
                         <span>{progress}%</span>
                       </div>
                       <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
@@ -184,58 +219,58 @@ export default function Home() {
                 )}
 
                 {simStep === "done" && (
-                  <div className="space-y-5 animate-fade-in">
-                    <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-250 dark:border-emerald-900/30 p-3 rounded-2xl flex items-center gap-2.5">
-                      <span className="text-emerald-500">✅</span>
-                      <div className="text-left">
-                        <div className="text-[11px] font-black text-emerald-800 dark:text-emerald-450 uppercase tracking-wider">AI Ekstraksi Sukses!</div>
-                        <div className="text-[10px] text-emerald-650 dark:text-emerald-500 font-bold">Data KK berhasil diubah menjadi format database dalam 0.9 detik.</div>
+                  <div className="space-y-5 animate-in slide-in-from-bottom-2 duration-300">
+                    <div className="bg-emerald-500/5 dark:bg-emerald-950/20 border border-emerald-500/20 p-3.5 rounded-2xl flex items-start gap-3">
+                      <span className="text-emerald-500 text-lg">✓</span>
+                      <div className="text-left space-y-0.5">
+                        <div className="text-[11px] font-black text-emerald-800 dark:text-emerald-400 uppercase tracking-wider">Ekstraksi Sensus Sukses</div>
+                        <p className="text-[10.5px] text-slate-550 dark:text-zinc-500 leading-normal font-medium">Buku registrasi terisi otomatis. AI mendeteksi dokumen valid dalam waktu 0.9 detik.</p>
                       </div>
                     </div>
 
-                    <div className="bg-zinc-50 dark:bg-zinc-950 rounded-2xl p-4 border border-zinc-150 dark:border-zinc-805 space-y-3.5">
-                      <div className="grid grid-cols-2 gap-4 text-xs">
+                    <div className="bg-slate-50 dark:bg-zinc-950 rounded-2xl p-4.5 border border-slate-200/80 dark:border-zinc-800 space-y-3.5 text-left">
+                      <div className="grid grid-cols-2 gap-4 text-xs font-bold">
                         <div>
-                          <span className="text-[9px] text-zinc-400 font-bold uppercase tracking-wider">Nomor KK</span>
-                          <div className="font-extrabold text-zinc-800 dark:text-zinc-205">3273012345678901</div>
+                          <span className="text-[9px] text-slate-450 dark:text-zinc-600 font-bold uppercase tracking-wider block mb-0.5">Nomor KK</span>
+                          <div className="font-extrabold text-slate-800 dark:text-zinc-200">3273012345678901</div>
                         </div>
                         <div>
-                          <span className="text-[9px] text-zinc-400 font-bold uppercase tracking-wider">Alamat</span>
-                          <div className="font-extrabold text-zinc-800 dark:text-zinc-205">Jl. Sukamaju No. 12</div>
+                          <span className="text-[9px] text-slate-450 dark:text-zinc-600 font-bold uppercase tracking-wider block mb-0.5">Alamat</span>
+                          <div className="font-extrabold text-slate-800 dark:text-zinc-200">Perum Sukamaju Blok B No. 12</div>
                         </div>
                       </div>
 
-                      <div className="border-t border-zinc-200/60 dark:border-zinc-800/80 pt-3">
-                        <span className="text-[9px] text-zinc-450 font-bold uppercase tracking-wider block mb-2">Anggota Terdeteksi</span>
-                        <div className="space-y-2 text-[10.5px]">
-                          <div className="flex justify-between items-center bg-white dark:bg-zinc-900 p-2 rounded-lg border dark:border-zinc-805 font-bold">
-                            <span className="text-zinc-700 dark:text-zinc-300">1. Ahmad Subagja</span>
-                            <span className="text-[8.5px] bg-indigo-50 dark:bg-indigo-950/50 text-indigo-705 dark:text-indigo-400 px-2 py-0.5 rounded font-black uppercase">Kepala Keluarga</span>
+                      <div className="border-t border-slate-200 dark:border-zinc-800/85 pt-3">
+                        <span className="text-[9px] text-slate-450 dark:text-zinc-550 font-bold uppercase tracking-wider block mb-2">Relasi Anggota Terdeteksi</span>
+                        <div className="space-y-2 text-[11px] font-semibold">
+                          <div className="flex justify-between items-center bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-slate-100 dark:border-zinc-800">
+                            <span className="text-slate-700 dark:text-zinc-350">Ahmad Subagja</span>
+                            <span className="text-[8px] bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 px-2 py-0.5 rounded-md font-black uppercase">Kepala Keluarga</span>
                           </div>
-                          <div className="flex justify-between items-center bg-white dark:bg-zinc-900 p-2 rounded-lg border dark:border-zinc-805 font-bold">
-                            <span className="text-zinc-700 dark:text-zinc-300">2. Sumiati</span>
-                            <span className="text-[8.5px] bg-indigo-50 dark:bg-indigo-950/50 text-indigo-705 dark:text-indigo-400 px-2 py-0.5 rounded font-black uppercase">Istri</span>
+                          <div className="flex justify-between items-center bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-slate-100 dark:border-zinc-800">
+                            <span className="text-slate-700 dark:text-zinc-350">Sumiati</span>
+                            <span className="text-[8px] bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 px-2 py-0.5 rounded-md font-black uppercase">Istri</span>
                           </div>
-                          <div className="flex justify-between items-center bg-white dark:bg-zinc-900 p-2 rounded-lg border dark:border-zinc-805 font-bold">
-                            <span className="text-zinc-700 dark:text-zinc-300">3. Rian Hidayat</span>
-                            <span className="text-[8.5px] bg-indigo-50 dark:bg-indigo-950/50 text-indigo-705 dark:text-indigo-400 px-2 py-0.5 rounded font-black uppercase">Anak</span>
+                          <div className="flex justify-between items-center bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-slate-100 dark:border-zinc-800">
+                            <span className="text-slate-700 dark:text-zinc-350">Rian Hidayat</span>
+                            <span className="text-[8px] bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 px-2 py-0.5 rounded-md font-black uppercase">Anak</span>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-end gap-2">
+                    <div className="flex justify-end gap-3 pt-1">
                       <button
                         onClick={() => setSimStep("idle")}
-                        className="px-4 py-2 border border-zinc-200 dark:border-zinc-800 text-zinc-500 rounded-xl text-xs font-bold hover:bg-zinc-50 dark:hover:bg-zinc-950 transition-colors"
+                        className="px-4 py-2 border border-slate-200 dark:border-zinc-800 text-slate-500 rounded-xl text-xs font-bold hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
                       >
-                        Reset
+                        Ulangi Simulasi
                       </button>
                       <Link
                         href="/beranda"
-                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-extrabold flex items-center gap-1 shadow-md"
+                        className="px-5 py-2 bg-indigo-650 hover:bg-indigo-700 text-white rounded-xl text-xs font-extrabold flex items-center gap-1 shadow-md cursor-pointer hover:-translate-y-0.5 transition-all"
                       >
-                        Mulai Praktik
+                        Coba di Dashboard
                         <ArrowRight size={12} />
                       </Link>
                     </div>
@@ -247,265 +282,205 @@ export default function Home() {
         </div>
       </section>
 
-      {/* KILLER FEATURE: Before / After Comparison */}
+      {/* Comparison Section (Before vs After) */}
       <section className="py-20 bg-white dark:bg-zinc-900 border-y border-slate-205 dark:border-zinc-800/60 relative">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-50 dark:bg-rose-955/20 text-rose-700 dark:text-rose-455 border border-rose-100 dark:border-rose-900/30">
-              ⚡ FITUR UTAMA
+              ⚡ COMPATIBILITY
             </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-zinc-955 dark:text-white">
-              Mengapa Pak RT & Bendahara Harus Ganti ke RTKu?
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white">
+              Mengapa Harus Beralih ke RTKu?
             </h2>
-            <p className="text-slate-655 dark:text-zinc-400">
-              Perbandingan nyata efisiensi pencatatan manual vs AI RTKu.
+            <p className="text-slate-500 dark:text-zinc-400 text-sm">
+              Perbandingan efisiensi nyata pengelolaan rukun tetangga cara lama vs cara digital.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Before (Manual) */}
-            <div className="bg-slate-50 dark:bg-zinc-950/50 p-8 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 space-y-6 relative overflow-hidden">
-              <div className="h-1 bg-red-400 w-16 rounded-full"></div>
-              <h3 className="text-xl font-bold text-red-500 flex items-center gap-2">
-                ❌ Cara Manual (Repot & Lambat)
+            <div className="bg-slate-50/50 dark:bg-zinc-950/40 p-8 rounded-[28px] border border-slate-200 dark:border-zinc-800/80 space-y-6 relative">
+              <div className="w-10 h-10 rounded-2xl bg-red-50 dark:bg-red-950/20 text-red-500 flex items-center justify-center text-sm font-black">X</div>
+              <h3 className="text-xl font-bold text-red-650 dark:text-red-400">
+                Cara Manual Lama
               </h3>
-              <ul className="space-y-4 text-sm text-slate-550 dark:text-zinc-405 font-medium">
-                <li className="flex items-center gap-3">
-                  <span className="text-red-400">⚠️</span> Ketik nama KK & anggota satu-satu (10 menit / KK)
+              <ul className="space-y-4 text-xs sm:text-sm text-slate-500 dark:text-zinc-500 font-semibold leading-relaxed">
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-405 leading-none">⚠️</span>
+                  <span>Ketik ulang NIK dan nama anggota keluarga satu per satu (10 menit per KK).</span>
                 </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-red-400">⚠️</span> Typo NIK sering terjadi, pusing cek dokumen ulang
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-405 leading-none">⚠️</span>
+                  <span>Rentah salah ketik NIK / nomor berkas yang mengakibatkan data dinas warga eror.</span>
                 </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-red-400">⚠️</span> Bendahara catat iuran warga pakai buku fisik
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-405 leading-none">⚠️</span>
+                  <span>Pencatatan iuran di buku kas fisik rentan robek, hilang, atau manipulasi data.</span>
                 </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-red-400">⚠️</span> Warga tidak tahu kemana kas RT dipakai
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-405 leading-none">⚠️</span>
+                  <span>Warga kesulitan melihat jumlah kas RT dan mengajukan keluhan secara instan.</span>
                 </li>
               </ul>
-              <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 text-xs font-bold text-red-400 uppercase tracking-widest text-right">
-                Pekerjaan 1 jam+
+              <div className="pt-4 border-t border-slate-200 dark:border-zinc-800 text-[10px] font-bold text-red-400 uppercase tracking-widest text-right">
+                Butuh Berjam-jam
               </div>
             </div>
 
             {/* After (RTKu AI) */}
-            <div className="bg-indigo-650/5 dark:bg-indigo-950/20 p-8 rounded-3xl border-2 border-indigo-500/30 dark:border-indigo-500/20 space-y-6 relative overflow-hidden shadow-lg shadow-indigo-550/5">
-              <div className="absolute top-0 right-0 bg-gradient-to-l from-indigo-500/10 to-transparent w-full h-full pointer-events-none"></div>
-              <div className="h-1 bg-indigo-500 w-16 rounded-full"></div>
-              <h3 className="text-xl font-bold text-indigo-655 dark:text-indigo-400 flex items-center gap-2">
-                🚀 Cara RTKu (Otomatis & Cepat)
+            <div className="bg-indigo-650/5 dark:bg-indigo-950/20 p-8 rounded-[28px] border-2 border-indigo-500/20 dark:border-indigo-500/10 space-y-6 relative shadow-lg shadow-indigo-650/5">
+              <div className="w-10 h-10 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-black">✓</div>
+              <h3 className="text-xl font-bold text-indigo-650 dark:text-indigo-400">
+                Cara Pintar Dengan RTKu
               </h3>
-              <ul className="space-y-4 text-sm text-zinc-700 dark:text-zinc-300 font-extrabold">
-                <li className="flex items-center gap-3">
-                  <span className="text-indigo-550">📸</span> Cukup foto KK pakai HP standar
+              <ul className="space-y-4 text-xs sm:text-sm text-slate-800 dark:text-zinc-200 font-bold leading-relaxed">
+                <li className="flex items-start gap-2.5">
+                  <span className="text-indigo-550 dark:text-indigo-400 leading-none">✓</span>
+                  <span>Foto KK dari kamera HP/laptop Anda untuk pendaftaran terotomatisasi.</span>
                 </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-indigo-555">🤖</span> AI membaca & menginput seluruh tabel anggota (30 detik / KK)
+                <li className="flex items-start gap-2.5">
+                  <span className="text-indigo-550 dark:text-indigo-400 leading-none">✓</span>
+                  <span>Ekstraksi data KK digital otomatis dalam 30 detik berkat teknologi AI OCR.</span>
                 </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-indigo-555">📊</span> Dashboard keuangan lunas/tunggak otomatis real-time
+                <li className="flex items-start gap-2.5">
+                  <span className="text-indigo-550 dark:text-indigo-400 leading-none">✓</span>
+                  <span>Manajemen iuran otomatis terintegrasi e-wallet dengan Pakasir Payment.</span>
                 </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-indigo-555">✅</span> Warga melihat laporan kas secara transparan
+                <li className="flex items-start gap-2.5">
+                  <span className="text-indigo-550 dark:text-indigo-400 leading-none">✓</span>
+                  <span>Sistem surat menyurat (PDF), aduan real-time, dan transparansi keuangan.</span>
                 </li>
               </ul>
-              <div className="pt-4 border-t border-indigo-100 dark:border-indigo-900/50 text-xs font-black text-indigo-650 dark:text-indigo-400 uppercase tracking-widest text-right">
-                Pekerjaan 30 detik saja!
+              <div className="pt-4 border-t border-indigo-100 dark:border-indigo-900/50 text-[10px] font-black text-indigo-650 dark:text-indigo-400 uppercase tracking-widest text-right">
+                Selesai Dalam 30 Detik
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5 CORE MODULES */}
-      <section className="py-24 bg-slate-50 dark:bg-zinc-955 relative overflow-hidden">
+      {/* Modules Grid */}
+      <section className="py-24 bg-slate-50 dark:bg-zinc-950 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
+          <div className="text-center max-w-2xl mx-auto mb-20 space-y-3">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-75CC dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/35">
-              📦 MODUL UTAMA
+              📦 DECK SISTEM
             </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-zinc-955 dark:text-white">
-              Sistem Lengkap Siap Pakai
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white">
+              Modul Administrasi Rumah Tangga Lengkah
             </h2>
-            <p className="text-slate-655 dark:text-zinc-400">
-              Aplikasi mandiri all-in-one tanpa biaya hosting berlebih untuk ekosistem RT digital Anda.
+            <p className="text-slate-500 dark:text-zinc-405 text-sm">
+              Semua modul yang Anda perlukan untuk mendigitalisasi unit Rukun Tetangga (RT) dalam satu aplikasi.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {/* Module 1 */}
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all space-y-4 group">
-              <div className="w-11 h-11 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6.5">
+            {/* Modul 1 */}
+            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all space-y-4 group">
+              <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105">
                 <ScanLine size={24} />
               </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-extrabold text-zinc-850 dark:text-white">AI Scan KK</h3>
-                <span className="text-[10px] inline-block bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-400 px-2 py-0.5 rounded font-black tracking-wide">⏱️ 30 Detik/KK</span>
-              </div>
-              <p className="text-slate-600 dark:text-zinc-400 text-xs leading-relaxed">
-                Ekstrak nama, NIK, alamat otomatis dari jepretan kamera ponsel, tak perlu ketik ulang dari nol.
+              <h3 className="font-bold text-slate-850 dark:text-white text-base">Analisa File KK Otomatis</h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed font-semibold">
+                Unggah foto berkas KK Anda, kecerdasan buatan akan langsung merinci tabel kependudukan di dashboard RT secara instan.
               </p>
             </div>
 
-            {/* Module 2 */}
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all space-y-4 group">
-              <div className="w-11 h-11 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+            {/* Modul 2 */}
+            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all space-y-4 group">
+              <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105">
                 <Users size={24} />
               </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-extrabold text-zinc-850 dark:text-white">Data Warga</h3>
-                <span className="text-[10px] inline-block bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-450 px-2 py-0.5 rounded font-black tracking-wide">📊 Dashboard Real-time</span>
-              </div>
-              <p className="text-slate-605 dark:text-zinc-400 text-xs leading-relaxed">
-                Dashboard terpusat untuk profil seluruh warga, kepemilikan KK, riwayat tinggal, & pencarian instan.
+              <h3 className="font-bold text-slate-850 dark:text-white text-base">Database Sensus Warga</h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed font-semibold">
+                Pantau struktur keluarga, status tinggal (tetap/kontrak), dan kontak warga RT dengan pencarian real-time terpusat.
               </p>
             </div>
 
-            {/* Module 3 */}
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all space-y-4 group">
-              <div className="w-11 h-11 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+            {/* Modul 3 */}
+            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all space-y-4 group">
+              <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105">
                 <Wallet size={24} />
               </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-extrabold text-zinc-850 dark:text-white">Auto-Collect Iuran</h3>
-                <span className="text-[10px] inline-block bg-indigo-50 dark:bg-indigo-950 text-indigo-705 dark:text-indigo-400 px-2 py-0.5 rounded font-black tracking-wide">📉 Tunggakan -70%</span>
-              </div>
-              <p className="text-slate-650 dark:text-zinc-400 text-xs leading-relaxed">
-                Tagih iuran bulanan digital pakai payment link Pakasir. Bayar gampang via QRIS, e-wallet, VA.
+              <h3 className="font-bold text-slate-850 dark:text-white text-base">Kas & Iuran Warga Digital</h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed font-semibold">
+                Bayar iuran lewat payment gateway Pakasir (QRIS, VA, GoPay, dsb) dengan pembukuan pengeluaran kas transparan.
               </p>
             </div>
 
-            {/* Module 4 */}
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all space-y-4 group">
-              <div className="w-11 h-11 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+            {/* Modul 4 */}
+            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all space-y-4 group">
+              <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105">
                 <FileText size={24} />
               </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-extrabold text-zinc-850 dark:text-white">Surat Pengantar</h3>
-                <span className="text-[10px] inline-block bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded font-black tracking-wide">⚡ Format PDF Instan</span>
-              </div>
-              <p className="text-slate-650 dark:text-zinc-400 text-xs leading-relaxed">
-                Generator surat pengantar KTP, KK, Domisili, SKTM terisi otomatis dari database siap cetak.
+              <h3 className="font-bold text-slate-850 dark:text-white text-base">Permohonan Surat Kuasa</h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed font-semibold">
+                Warga bisa membuat draf surat pengantar (KTP, Domisili, SKTM) dari dashboard mereka untuk disetujui Ketua RT secara digital.
               </p>
             </div>
 
-            {/* Module 5 */}
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all space-y-4 group">
-              <div className="w-11 h-11 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+            {/* Modul 5 */}
+            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all space-y-4 group">
+              <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105">
+                <MessageSquare size={24} />
+              </div>
+              <h3 className="font-bold text-slate-850 dark:text-white text-base">Kanal Pengaduan & Aspirasi</h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed font-semibold">
+                Laporkan masalah lingkungan (seperti jalanan rusak, pemadaman) lengkap dengan bukti foto dan pelacak proses terpadu.
+              </p>
+            </div>
+
+            {/* Modul 6 */}
+            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all space-y-4 group">
+              <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-455 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105">
                 <Smartphone size={24} />
               </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-extrabold text-zinc-850 dark:text-white">WhatsApp & PWA</h3>
-                <span className="text-[10px] inline-block bg-sky-50 dark:bg-sky-950 text-sky-700 dark:text-sky-400 px-2 py-0.5 rounded font-black tracking-wide">📲 Instalasi Langsung</span>
-              </div>
-              <p className="text-slate-605 dark:text-zinc-400 text-xs leading-relaxed">
-                Bisa diinstal langsung ke layar HP warga, plus terkirim notifikasi kode verifikasi via WhatsApp.
+              <h3 className="font-bold text-slate-850 dark:text-white text-base">Aplikasi PWA Ringan</h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed font-semibold">
+                Instal RTKu di desktop maupun layar depan HP Anda layaknya aplikasi native mobile tanpa biaya storage besar.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SOCIAL PROOF / TESTIMONIALS */}
-      <section className="py-24 bg-white dark:bg-zinc-900 border-t border-zinc-150 dark:border-zinc-800/60 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30">
-              💬 TESTIMONI
-            </div>
-            <h2 className="text-3xl font-extrabold text-zinc-955 dark:text-white">
-              Disukai oleh 300+ Pengurus RT di Indonesia
-            </h2>
-            <p className="text-slate-605 dark:text-zinc-400">
-              Dengarkan langsung dari sesama pengurus RT yang sudah memakai sistem kami.
-            </p>
+      {/* Security Info */}
+      <section className="py-20 bg-white dark:bg-zinc-900 border-t border-slate-200 dark:border-zinc-850 text-center">
+        <div className="max-w-2xl mx-auto px-6 space-y-5">
+          <div className="w-14 h-14 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mx-auto shadow-sm">
+            <Lock size={28} />
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Testimonial 1 */}
-            <div className="bg-slate-50 dark:bg-zinc-955 p-6 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 space-y-4">
-              <div className="flex gap-1 text-amber-500">
-                {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
-              </div>
-              <p className="text-xs md:text-sm text-slate-655 dark:text-zinc-400 italic leading-relaxed">
-                "Sebelum pakai RTKu saya harus luangkan waktu seharian buat input data warga dari KK. Sekarang tinggal jepret foto pakai HP selesai 30 detik. Sangat menghemat waktu!"
-              </p>
-              <div>
-                <h4 className="font-extrabold text-sm text-zinc-850 dark:text-white">Pak Joko</h4>
-                <p className="text-[10px] text-zinc-400 font-bold">RT 03 / RW 12, Surabaya</p>
-              </div>
-            </div>
-
-            {/* Testimonial 2 */}
-            <div className="bg-slate-50 dark:bg-zinc-955 p-6 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 space-y-4">
-              <div className="flex gap-1 text-amber-505">
-                {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
-              </div>
-              <p className="text-xs md:text-sm text-slate-655 dark:text-zinc-400 italic leading-relaxed">
-                "Warga senang sekali sekarang iuran bulanan bisa bayar pakai QRIS dan e-wallet. Tagihan juga otomatis muncul di dashboard warga, jadi transparansi keuangan RT luar biasa terjaga."
-              </p>
-              <div>
-                <h4 className="font-extrabold text-sm text-zinc-850 dark:text-white">Ibu Sumarni</h4>
-                <p className="text-[10px] text-zinc-400 font-bold">Bendahara RT 09, Jakarta Selatan</p>
-              </div>
-            </div>
-
-            {/* Testimonial 3 */}
-            <div className="bg-slate-50 dark:bg-zinc-955 p-6 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 space-y-4">
-              <div className="flex gap-1 text-amber-505">
-                {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
-              </div>
-              <p className="text-xs md:text-sm text-slate-655 dark:text-zinc-400 italic leading-relaxed">
-                "Cetak surat pengantar ke kantor kelurahan tinggal pencet satu tombol langsung unduh PDF. Data warga langsung masuk dari profiling KK, tidak ada salah ketik lagi."
-              </p>
-              <div>
-                <h4 className="font-extrabold text-sm text-zinc-850 dark:text-white">Pak Andi</h4>
-                <p className="text-[10px] text-zinc-400 font-bold">RT 01, RW 05, Bandung</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PRIVACY & SECURITY CLAIMS */}
-      <section className="py-16 bg-slate-50 dark:bg-zinc-950">
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-4">
-          <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-650 dark:text-indigo-400 rounded-2xl flex items-center justify-center mx-auto shadow-sm">
-            <ShieldCheck size={26} />
-          </div>
-          <h3 className="text-lg font-black text-zinc-855 dark:text-white">Keamanan & Kerahasiaan Berkas Terjamin</h3>
-          <p className="text-sm text-slate-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
-            Data KK sangat sensitif. Oleh karena itu, server kami langsung menghapus bekas foto KK dari database secara permanen setelah AI selesai mengekstrak teks. Kami tidak mendistribusikan data warga ke pihak manapun.
+          <h3 className="text-2xl font-black text-slate-900 dark:text-white">Privasi Berkas Kependudukan Terjamin</h3>
+          <p className="text-sm text-slate-550 dark:text-zinc-400 leading-relaxed font-semibold">
+            Gambar Kartu Keluarga (KK) yang diunggah hanya diproses sekali oleh server RTKu AI untuk ekstraksi biodata sensus (OCR). Setelah selesai dianalisis, berkas media foto langsung dihapus permanen untuk mencegah penyalahgunaan data.
           </p>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="bg-white dark:bg-zinc-900 py-24 border-t border-slate-150 dark:border-zinc-800/80 relative overflow-hidden">
-        <div className="absolute bottom-0 right-[10%] w-[30%] aspect-square rounded-full bg-indigo-650/5 blur-[120px] pointer-events-none"></div>
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-8 relative">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-zinc-955 dark:text-white">
-            Aktivasi Instan, Upgrade Selamanya
+      {/* License Price Section */}
+      <section className="bg-slate-50 dark:bg-zinc-950 py-24 border-t border-slate-200 dark:border-zinc-800 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-8">
+          <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white">
+            Aktivasi Cepat, Akses Permanen
           </h2>
-          <p className="text-slate-655 dark:text-zinc-400 max-w-xl mx-auto">
-            Gunakan trial gratis 7 hari tanpa komitmen. Upgrade ke lisensi permanen seharga dua cangkir kopi untuk kepengurusan selamanya.
+          <p className="text-slate-550 dark:text-zinc-400 max-w-xl mx-auto font-medium text-sm leading-relaxed">
+            Dapatkan masa coba gratis sistem RTKu selama 7 hari. Bayar sekali tanpa iuran bulanan untuk mengaktifkan kode lisensi unit RT Anda selamanya.
           </p>
-          <div className="inline-block bg-slate-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800/80 p-8 rounded-3xl shadow-xl max-w-md w-full relative group">
-            {/* Sparkle badge */}
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-600 to-indigo-550 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
-              ONE TIME LICENSE
+          <div className="inline-block bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/80 p-8 rounded-3xl shadow-xl max-w-md w-full relative group">
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-650 to-indigo-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-md">
+              LISENSI SEUMUR HIDUP (LIFETIME)
             </div>
 
-            <div className="text-[10px] font-black text-zinc-400 dark:text-zinc-555 uppercase tracking-widest mt-2 font-mono">Investasi Terbaik Pengurus RT</div>
-            <div className="text-5xl font-black text-indigo-650 dark:text-indigo-400 mt-2.5">Rp 15.000</div>
-            <div className="text-xs text-slate-400 dark:text-zinc-550 mt-4 leading-relaxed font-bold">
-              Tanpa biaya bulanan tersembunyi. Satu kali bayar untuk satu unit RT aktif selamanya!
+            <div className="text-[10px] font-black text-slate-450 dark:text-zinc-500 uppercase tracking-widest mt-3 font-mono">Investasi Digital RT Terbaik</div>
+            <div className="text-5xl font-black text-indigo-600 dark:text-indigo-400 mt-3">Rp 15.000</div>
+            <div className="text-xs text-slate-500 dark:text-zinc-450 mt-4 leading-relaxed font-bold">
+              Bayar sekali via QRIS / E-wallet RT Anda untuk mengaktifkan Lisensi RTKu selamanya tanpa biaya tambahan tersembunyi.
             </div>
 
-            <div className="pt-6 mt-6 border-t border-zinc-200 dark:border-zinc-800 flex justify-center">
+            <div className="pt-6 mt-6 border-t border-slate-200 dark:border-zinc-800 flex justify-center">
               <Link
                 href="/beranda"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold px-6 py-3 rounded-2xl shadow-md transition-all active:scale-98 cursor-pointer"
+                className="bg-indigo-650 hover:bg-indigo-700 text-white font-extrabold px-8 py-3.5 rounded-xl shadow-md transition-all active:scale-97 hover:-translate-y-0.5 cursor-pointer uppercase text-xs tracking-wider"
               >
                 Mulai Setup Sekarang
               </Link>
@@ -515,9 +490,10 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-zinc-950 text-zinc-500 py-12 border-t border-zinc-900 text-center text-sm font-medium">
-        <div className="max-w-6xl mx-auto px-6">
-          <p>&copy; {new Date().getFullYear()} RTKu PWA. Powered by Next.js & Pakasir. 🇮🇩 100% Buatan Indonesia</p>
+      <footer className="bg-zinc-950 text-zinc-650 py-12 border-t border-zinc-900 text-center text-xs font-semibold">
+        <div className="max-w-6xl mx-auto px-6 space-y-2">
+          <p>&copy; {new Date().getFullYear()} RTKu. Powered by Next.js & Pakasir Payment. Made in Indonesia 🇮🇩</p>
+          <p className="text-[10px] text-zinc-700">Aplikasi Administrasi Rukun Tetangga (RT) Mandiri Terdesentralisasi.</p>
         </div>
       </footer>
     </div>

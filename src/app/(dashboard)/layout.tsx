@@ -18,8 +18,12 @@ export default async function DashboardLayout({
 
   const dbUser = await prisma.user.findUnique({
     where: { id: (session.user as any).id },
-    select: { role: true }
+    select: { role: true, isOnboarded: true }
   });
 
-  return <Shell userRole={dbUser?.role || "WARGA"}>{children}</Shell>;
+  return (
+    <Shell userRole={dbUser?.role || "WARGA"} isOnboarded={dbUser?.isOnboarded ?? false}>
+      {children}
+    </Shell>
+  );
 }

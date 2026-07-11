@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -14,7 +14,10 @@ import {
   Calendar,
   Settings,
   Menu,
-  X
+  X,
+  UserCheck,
+  Building,
+  ArrowRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -31,9 +34,26 @@ const navigations = [
   { name: "Pengaturan", href: "/pengaturan", icon: Settings },
 ];
 
-export function Shell({ children, userRole }: { children: React.ReactNode; userRole: string }) {
+export function Shell({
+  children,
+  userRole,
+  isOnboarded: initialIsOnboarded
+}: {
+  children: React.ReactNode;
+  userRole: string;
+  isOnboarded: boolean;
+}) {
   const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isOnboarded, setIsOnboarded] = useState(initialIsOnboarded);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // States untuk Form Onboarding
+  const [name, setName] = useState("");
+  const [namaSekretaris, setNamaSekretaris] = useState("");
+  const [namaBendahara, setNamaBendahara] = useState("");
+  const [alamat, setAlamat] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const visibleNavigations = navigations.filter((item) => {
     if (userRole === "WARGA") {
@@ -60,8 +80,170 @@ export function Shell({ children, userRole }: { children: React.ReactNode; userR
     }
   }, []);
 
+  const handleOnboardingSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMsg("");
+
+    try {
+      const payload = userRole === "KETUA_RT"
+        ? { name, namaSekretaris, namaBendahara, alamat }
+        : { name };
+
+      const res = await fetch("/api/auth/onboarding", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        setIsOnboarded(true);
+        // Paksa reload penuh agar token JWT sesi klien NextAuth diperbarui dengan data profil yang baru
+        window.location.reload();
+      } else {
+        setErrorMsg(data.error || "Gagal menyimpan onboarding");
+      }
+    } catch (err) {
+      console.error(err);
+      setErrorMsg("Koneksi bermasalah. Silakan coba lagi.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-zinc-950 text-slate-800 dark:text-zinc-200 transition-colors">
+      {/* ONBOARDING DIALOG MODAL LAYOUT */}
+      {!isOnboarded && (
+        <div className="fixed inset-0 z-[9999] bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl relative animate-in zoom-in-95 duration-200">
+            {userRole === "KETUA_RT" ? (
+              // Onboarding Form untuk Ketua RT Baru
+              <form onSubmit={handleOnboardingSubmit} className="space-y-5">
+                <div className="text-center space-y-2">
+                  <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mx-auto">
+                    <Building className="w-6 h-6" />
+                  </div>
+                  <h2 className="text-2xl font-black text-slate-900 dark:text-white">Setup RT Baru Anda</h2>
+                  <p className="text-xs text-slate-500">Lengkapi data awal pengurus dan kesekretariatan RT untuk memulai.</p>
+                </div>
+
+                {errorMsg && (
+                  <div className="p-3 bg-red-50 dark:bg-red-950/20 text-red-650 dark:text-red-400 text-xs font-semibold rounded-xl text-center">
+                    {errorMsg}
+                  </div>
+                )}
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nama Ketua RT</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Masukkan nama Ketua RT"
+                      className="w-full border dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-950 p-2.5 rounded-xl text-sm dark:text-white placeholder:text-slate-400"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nama Sekretaris</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Nama Sekretaris"
+                        className="w-full border dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-950 p-2.5 rounded-xl text-sm dark:text-white placeholder:text-slate-400"
+                        value={namaSekretaris}
+                        onChange={(e) => setNamaSekretaris(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nama Bendahara</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Nama Bendahara"
+                        className="w-full border dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-950 p-2.5 rounded-xl text-sm dark:text-white placeholder:text-slate-400"
+                        value={namaBendahara}
+                        onChange={(e) => setNamaBendahara(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Alamat Sekretariat RT</label>
+                    <textarea
+                      required
+                      rows={2.5}
+                      placeholder="Contoh: Perum Indah Blok A No. 12"
+                      className="w-full border dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-950 p-2.5 rounded-xl text-sm dark:text-white placeholder:text-slate-400 resize-none"
+                      value={alamat}
+                      onChange={(e) => setAlamat(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3 bg-slate-900 hover:bg-slate-800 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white font-bold rounded-xl text-sm shadow-md transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                >
+                  {isSubmitting ? "Menyimpan data..." : (
+                    <>
+                      Simpan & Mulai Dashboard
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </form>
+            ) : (
+              // Onboarding Form untuk Warga Baru
+              <form onSubmit={handleOnboardingSubmit} className="space-y-5">
+                <div className="text-center space-y-2">
+                  <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mx-auto">
+                    <UserCheck className="w-6 h-6" />
+                  </div>
+                  <h2 className="text-2xl font-black text-slate-900 dark:text-white">Lengkapi Nama Warga</h2>
+                  <p className="text-xs text-slate-500">Selamat datang di RTKu! Silakan isi nama lengkap Kepala Keluarga Anda.</p>
+                </div>
+
+                {errorMsg && (
+                  <div className="p-3 bg-red-50 dark:bg-red-950/20 text-red-650 dark:text-red-400 text-xs font-semibold rounded-xl text-center">
+                    {errorMsg}
+                  </div>
+                )}
+
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nama Lengkap Kepala Keluarga</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Masukkan nama lengkap Anda"
+                    className="w-full border dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-950 p-2.5 rounded-xl text-sm dark:text-white placeholder:text-slate-400"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3 bg-slate-900 hover:bg-slate-800 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white font-bold rounded-xl text-sm shadow-md transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                >
+                  {isSubmitting ? "Menyimpan data..." : (
+                    <>
+                      Masuk ke Halaman Utama
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div
