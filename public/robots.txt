@@ -1,0 +1,25 @@
+# robots.txt untuk RTKu - Rukun Tetangga Kita
+
+User-agent: *
+
+# Mengizinkan robot untuk merayapi halaman utama dan halaman masukpublik
+Allow: /$
+Allow: /login$
+
+# Melarang robot merayapi sistem dashboard internal & API demi perlindungan privasi data warga
+Disallow: /beranda
+Disallow: /warga
+Disallow: /iuran
+Disallow: /surat
+Disallow: /pengaduan
+Disallow: /pengumuman
+Disallow: /keuangan
+Disallow: /inventaris
+Disallow: /kegiatan
+Disallow: /pengaturan
+Disallow: /rsvp/
+Disallow: /api/
+Disallow: /auth/
+
+# Tautkan berkas sitemap publik
+Sitemap: https://rtku.id/sitemap.xml
