@@ -10,7 +10,8 @@ export async function POST(req: NextRequest) {
 
     const result = await sendOTP(phone);
     if (!result.success) {
-      return NextResponse.json({ error: result.message }, { status: 500 });
+      const status = result.message === "Nomor tidak terdaftar" ? 400 : 550;
+      return NextResponse.json({ error: result.message }, { status: status === 550 ? 500 : status });
     }
 
     return NextResponse.json({ success: true, message: result.message });
